@@ -53,10 +53,10 @@
     <div class="main-content">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <div class="search-box">
-                        <input type="text" id="location" class="form-control" placeholder="Enter location (default: Kuantan)">
-                        <button onclick="getWeather()" class="btn btn-primary">Search</button>
+                <div class="col-md-10">
+                    <div class="search-container">
+                        <input type="text" id="location" class="search-input" placeholder="Enter location (default: Kuantan)" value="Kuantan">
+                        <button onclick="getWeather()" class="search-button">SEARCH</button>
                     </div>
                 </div>
             </div>
@@ -112,9 +112,72 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Add this after the weather-info section -->
+            <div class="row justify-content-center mt-4">
+                <div class="col-md-8">
+                    <div class="currency-card">
+                        <div class="card-header bg-info text-white d-flex align-items-center">
+                            <i class="fas fa-money-bill-transfer me-2"></i>
+                            <h5 class="mb-0">Currency Converter</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label text-white">Amount</label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" id="amount" placeholder="Enter amount" value="1">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label text-white">From Currency</label>
+                                    <select class="form-select" id="fromCurrency">
+                                        <option value="USD">USD - US Dollar</option>
+                                        <option value="EUR">EUR - Euro</option>
+                                        <option value="GBP">GBP - British Pound</option>
+                                        <option value="JPY">JPY - Japanese Yen</option>
+                                        <option value="MYR">MYR - Malaysian Ringgit</option>
+                                        <option value="SGD">SGD - Singapore Dollar</option>
+                                        <option value="AUD">AUD - Australian Dollar</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 text-center">
+                                    <button class="btn btn-light btn-sm" id="swapCurrencies">
+                                        <i class="fas fa-exchange-alt"></i>
+                                    </button>
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="form-label text-white">To Currency</label>
+                                    <select class="form-select" id="toCurrency">
+                                        <option value="MYR">MYR - Malaysian Ringgit</option>
+                                        <option value="USD">USD - US Dollar</option>
+                                        <option value="EUR">EUR - Euro</option>
+                                        <option value="GBP">GBP - British Pound</option>
+                                        <option value="JPY">JPY - Japanese Yen</option>
+                                        <option value="SGD">SGD - Singapore Dollar</option>
+                                        <option value="AUD">AUD - Australian Dollar</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="text-center mt-4">
+                                <button class="btn btn-light" onclick="convertCurrency()">
+                                    <i class="fas fa-calculator me-2"></i>Convert
+                                </button>
+                            </div>
+                            <div id="conversionResult" class="mt-4 text-center text-white">
+                                <!-- Conversion result will appear here -->
+                            </div>
+                            <div id="lastUpdated" class="mt-2 text-center small text-white-50">
+                                <!-- Last updated timestamp will appear here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <script src="../js/weather.js"></script>
+    <script src="../js/currency.js"></script>
     <script>
         document.getElementById('minimizeBtn').addEventListener('click', () => {
             window.electronAPI.minimizeWindow();

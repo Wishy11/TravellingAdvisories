@@ -1200,3 +1200,107 @@ h3 {
     background: rgba(255, 255, 255, 0.2);
     color: white;
 }
+
+.search-container {
+    display: flex;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 15px;
+    margin: 20px 0;
+}
+
+.search-input {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    color: white;
+    font-size: 16px;
+}
+
+.search-input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.search-input:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.search-button {
+    background: #4AA4F7;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 8px;
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.search-button:hover {
+    background: #3993e6;
+}
+
+/* Add this if you want the purple gradient background */
+.main-content {
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.currency-card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.currency-card .card-header {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.currency-card .form-control,
+.currency-card .form-select {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.currency-card .form-control::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.currency-card .form-control:focus,
+.currency-card .form-select:focus {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: none;
+    color: white;
+}
+
+.currency-card .form-select option {
+    background: #2b2b2b;
+    color: white;
+}
+
+#conversionResult {
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+#swapCurrencies i {
+    color: #000;
+}
+
+/* Optional hover effect */
+#swapCurrencies:hover i {
+    color: #333;
+}
+

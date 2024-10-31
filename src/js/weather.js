@@ -1,12 +1,20 @@
+// API Configuration
+// Keys and base URLs for weather service
 const WEATHER_API_KEY = '32804b24a847407391c53709241010';
 const WEATHER_API_BASE_URL = 'https://api.weatherapi.com/v1';
 const DEFAULT_LOCATION = 'Kuantan';
 
+// Weather Functions Section
+
+// Initialize Default Weather
+// Loads weather data for default location when app starts
 async function loadDefaultWeather() {
     document.getElementById('location').value = DEFAULT_LOCATION;
     await getWeather();
 }
 
+// Main Weather Fetching Function
+// Retrieves current weather and forecast data from API
 async function getWeather() {
     const location = document.getElementById('location').value || DEFAULT_LOCATION;
     
@@ -56,6 +64,10 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+// Display Functions Section
+
+// Weather Icon Mapping
+// Converts weather conditions to appropriate FontAwesome icons
 function getWeatherIcon(condition) {
     condition = condition.toLowerCase();
     
@@ -82,6 +94,8 @@ function getWeatherIcon(condition) {
     }
 }
 
+// Weather Display
+// Creates and updates the weather information card
 function displayWeatherInfo(data) {
     const weatherInfo = document.getElementById('weather-info');
     
@@ -103,8 +117,8 @@ function displayWeatherInfo(data) {
                     <p><i class="fas fa-wind"></i> Wind: ${data.current.wind_kph} km/h</p>
                     <p><i class="fas fa-tint"></i> Humidity: ${data.current.humidity}%</p>
                     <p><i class="far fa-clock"></i> Local Time: ${data.location.localtime}</p>
-                    <p><i class="fas fa-sunrise"></i> Sunrise: ${data.forecast.forecastday[0].astro.sunrise}</p>
-                    <p><i class="fas fa-sunset"></i> Sunset: ${data.forecast.forecastday[0].astro.sunset}</p>
+                    <p><i class="fas fa-sun"></i> Sunrise: ${data.forecast.forecastday[0].astro.sunrise}</p>
+                    <p><i class="fas fa-moon"></i> Sunset: ${data.forecast.forecastday[0].astro.sunset}</p>
                 </div>
             </div>
 
@@ -144,6 +158,10 @@ function displayWeatherInfo(data) {
     `;
 }
 
+// Recommendations Section
+
+// Clothing Recommendations
+// Suggests appropriate clothing based on temperature
 function displayClothingRecommendations(temperature) {
     const recommendationsDiv = document.getElementById('clothing-recommendations');
     let recommendations = '';
@@ -215,6 +233,8 @@ function displayClothingRecommendations(temperature) {
     recommendationsDiv.innerHTML = recommendations;
 }
 
+// Activity Recommendations
+// Suggests activities based on current weather conditions
 function displayActivitiesRecommendations(weatherData) {
     const activitiesDiv = document.getElementById('activities-recommendations');
     const recommendedActivities = getActivitiesRecommendations(weatherData);
@@ -241,6 +261,7 @@ function displayActivitiesRecommendations(weatherData) {
     `;
 }
 
+// Load weather for saved destinations
 async function loadSavedDestination(city) {
     try {
         document.getElementById('location').value = city;
@@ -280,6 +301,7 @@ async function loadSavedDestination(city) {
     }
 }
 
+// Generate activity recommendations based on weather
 function getActivitiesRecommendations(weatherData) {
     const condition = weatherData.current.condition.text.toLowerCase();
     const temp = weatherData.current.temp_c;
@@ -390,7 +412,7 @@ function getActivitiesRecommendations(weatherData) {
     return shuffleArray(uniqueActivities).slice(0, 5);
 }
 
-// Helper function to shuffle array
+// Utility Functions
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));

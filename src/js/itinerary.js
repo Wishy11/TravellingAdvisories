@@ -1,8 +1,8 @@
+// API Configuration
 const WEATHER_API_KEY = '32804b24a847407391c53709241010';
 const WEATHER_API_BASE_URL = 'https://api.weatherapi.com/v1';
 
-// Initialize Modal
-let editModal;
+// Initialize Modal and Event Listeners when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     editModal = new bootstrap.Modal(document.getElementById('editModal'));
     
@@ -14,7 +14,8 @@ document.addEventListener('DOMContentLoaded', function() {
     loadItineraries();
 });
 
-// Handle form submission
+// Main Form Submission Handler
+// Handles the creation of new itineraries with weather data
 document.getElementById('itineraryForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     
@@ -53,7 +54,8 @@ document.getElementById('itineraryForm').addEventListener('submit', async functi
     }
 });
 
-// CRUD Functions with Weather
+// CRUD Operations
+// Create: Add new itinerary with weather information
 async function addItinerary() {
     const destination = document.getElementById('destination').value;
     
@@ -103,6 +105,7 @@ async function addItinerary() {
     }
 }
 
+// Read: Fetch weather data for a destination
 async function getDestinationWeather(destination) {
     try {
         const encodedDestination = encodeURIComponent(destination);
@@ -122,6 +125,7 @@ async function getDestinationWeather(destination) {
     }
 }
 
+// Create: Generate HTML for itinerary card display
 function createItineraryCard(itinerary) {
     const col = document.createElement('div');
     col.className = 'col-md-6 mb-3';
@@ -172,6 +176,7 @@ function createItineraryCard(itinerary) {
     return col;
 }
 
+// Update: Modify existing itinerary
 async function updateItinerary() {
     const id = parseInt(document.getElementById('editId').value);
     const destination = document.getElementById('editDestination').value;
@@ -232,6 +237,7 @@ async function updateItinerary() {
     }
 }
 
+// Read: Load all itineraries from storage
 async function loadItineraries() {
     const itineraryList = document.getElementById('itineraryList');
     const loadingSpinner = document.getElementById('loadingSpinner');
@@ -275,6 +281,7 @@ async function loadItineraries() {
     }
 }
 
+// Update: Load itinerary data into edit modal
 async function editItinerary(id) {
     try {
         // Get all itineraries from files
@@ -306,6 +313,7 @@ async function editItinerary(id) {
     }
 }
 
+// Delete: Remove itinerary from storage
 async function deleteItinerary(id) {
     if (confirm('Are you sure you want to delete this itinerary?')) {
         try {
@@ -340,6 +348,8 @@ async function deleteItinerary(id) {
     }
 }
 
+// Utility Functions
+// Format date for display
 function formatDate(dateString) {
     return new Date(dateString).toLocaleDateString('en-US', {
         year: 'numeric',
@@ -348,7 +358,7 @@ function formatDate(dateString) {
     });
 }
 
-// Add notification function
+// Display notification alerts
 function showAlert(type, message) {
     const alertDiv = document.createElement('div');
     alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
@@ -366,10 +376,13 @@ function showAlert(type, message) {
     }, 5000);
 }
 
-// Add this after your existing constants
+// Weather Preview Functions
+// Update weather preview with debouncing
 let weatherPreviewDebounceTimer;
 
-// Add this after DOMContentLoaded event listener
+
+
+
 document.getElementById('destination').addEventListener('input', function(e) {
     clearTimeout(weatherPreviewDebounceTimer);
     const destination = e.target.value.trim();
@@ -383,7 +396,7 @@ document.getElementById('destination').addEventListener('input', function(e) {
     }
 });
 
-// Add these new functions
+
 async function updateWeatherPreview(destination) {
     const weatherPreview = document.getElementById('weatherPreview');
     
@@ -514,7 +527,6 @@ async function readItineraryFile(id) {
     }
 }
 
-// Add this to your existing destination input event listener
 document.getElementById('destination').addEventListener('change', async function() {
     const destination = this.value.trim();
     if (destination) {
@@ -531,16 +543,3 @@ document.getElementById('destination').addEventListener('change', async function
     }
 });
 
-// Update your createItineraryCard function to include a map button
-function createItineraryCard(itinerary) {
-    // ... existing card HTML ...
-    const cardButtons = `
-        <div class="btn-group mt-2">
-            <button class="btn btn-info btn-sm" onclick="window.mapFunctions.searchLocation('${itinerary.destination}')">
-                <i class="fas fa-map-marker-alt me-1"></i> Show on Map
-            </button>
-            // ... other buttons ...
-        </div>
-    `;
-    // ... rest of the function ...
-}

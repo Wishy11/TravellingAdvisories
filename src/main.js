@@ -1,9 +1,12 @@
+// Import required Electron modules for desktop application functionality
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const fs = require('fs');
 
 let mainWindow;
 
+// Window Control Functions
+// These handle minimize, maximize, and close operations for the custom title bar
 ipcMain.on('minimize-window', () => {
     if (mainWindow) {
         mainWindow.minimize();
@@ -26,12 +29,14 @@ ipcMain.on('close-window', () => {
     }
 });
 
+// Main Window Creation
+// Sets up the main application window with specific configurations
 function createWindow() {
     mainWindow = new BrowserWindow({
         width: 1200,
         height: 800,
-        frame: false,
-        transparent: true,
+        frame: false,        // Removes default window frame for custom styling
+        transparent: true,   // Enables transparency effects
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: true,
@@ -42,6 +47,8 @@ function createWindow() {
     mainWindow.loadFile(path.join(__dirname, 'pages/index.html'));
 }
 
+// File Operations Section
+// Save Itinerary: Handles saving trip details to a text file
 ipcMain.handle('save-itinerary', async (event, itinerary) => {
     try {
         const customPath = path.join('C:', 'Users', 'User', 'OneDrive - Kolej Profesional MARA Indera Mahkota', 'Desktop', 'OOPCoding', 'TrvelAdvisor', 'textfiles');
@@ -90,6 +97,7 @@ Last Updated: ${new Date().toLocaleString()}
     }
 });
 
+// Delete Itinerary: Removes saved trip information
 ipcMain.handle('delete-itinerary', async (event, itinerary) => {
     try {
         const customPath = path.join('C:', 'Users', 'User', 'OneDrive - Kolej Profesional MARA Indera Mahkota', 'Desktop', 'OOPCoding', 'TrvelAdvisor', 'textfiles');
@@ -124,6 +132,7 @@ ipcMain.handle('delete-itinerary', async (event, itinerary) => {
     }
 });
 
+// Read Itineraries: Fetches all saved trip information
 ipcMain.handle('read-itineraries', async () => {
     try {
         const customPath = path.join('C:', 'Users', 'User', 'OneDrive - Kolej Profesional MARA Indera Mahkota', 'Desktop', 'OOPCoding', 'TrvelAdvisor', 'textfiles');
@@ -319,6 +328,7 @@ Last Updated: ${new Date().toLocaleString()}
     }
 });
 
+// Application Event Handlers
 app.whenReady().then(createWindow);
 
 app.on('window-all-closed', () => {
