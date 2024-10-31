@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Travel Itineraries</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/loading-spinner.css">
+</head>
+<body>
+    <div class="titlebar">
+        <div class="titlebar-drag">Travel Advisories</div>
+        <div class="titlebar-controls">
+            <button class="titlebar-minimize" id="minimizeBtn">
+                <i class="fas fa-window-minimize"></i>
+            </button>
+            <button class="titlebar-maximize" id="maximizeBtn">
+                <i class="fas fa-window-maximize"></i>
+            </button>
+            <button class="titlebar-close" id="closeBtn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <a href="index.html" class="logo">
+                <img src="../images/logo.png" alt="Logo">
+            </a>
+        </div>
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link" href="index.html">
+                    <i class="fas fa-cloud-sun"></i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="itinerary.html">
+                    <i class="fas fa-route"></i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="weather.html">
+                    <i class="fas fa-map-marker-alt"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <div class="container mt-4">
+            <!-- Page Title -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <h1 class="display-5 text-primary">
+                        <i class="fas fa-map-marked-alt me-2"></i>Travel Planner
+                    </h1>
+                    <p class="text-muted">Plan your trips and keep track of your adventures</p>
+                </div>
+            </div>
+
+            <!-- Add New Itinerary Form -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-primary text-white">
+                            <h3 class="mb-0"><i class="fas fa-plus-circle me-2"></i>Add New Itinerary</h3>
+                        </div>
+                        <div class="card-body">
+                            <form id="itineraryForm">
+                                <div class="mb-3">
+                                    <label class="form-label">
+                                        <i class="fas fa-map-marker-alt me-2"></i>Destination
+                                    </label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="destination" 
+                                            placeholder="Enter city name" required>
+                                        <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                    </div>
+                                    <small class="form-text text-muted">
+                                        <i class="fas fa-info-circle me-1"></i>Enter city name to fetch weather data
+                                    </small>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">
+                                        <i class="fas fa-calendar-alt me-2"></i>Date
+                                    </label>
+                                    <input type="date" class="form-control" id="date" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">
+                                        <i class="fas fa-list-ul me-2"></i>Activities
+                                    </label>
+                                    <textarea class="form-control" id="activities" rows="3" 
+                                            placeholder="List your planned activities" required></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">
+                                        <i class="fas fa-sticky-note me-2"></i>Notes
+                                    </label>
+                                    <textarea class="form-control" id="notes" rows="2"
+                                            placeholder="Additional notes or reminders"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">
+                                    <i class="fas fa-plus me-2"></i>Add Itinerary
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Weather Preview Card -->
+                <div class="col-md-6">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-info">
+                            <h3 class="mb-0"><i class="fas fa-cloud-sun me-2"></i>Weather Preview</h3>
+                        </div>
+                        <div class="card-body">
+                            <div id="weatherPreview" class="text-center p-4">
+                                <p class="text-muted">Enter a destination to see weather forecast</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Edit Modal with enhanced styling -->
+            <div class="modal fade" id="editModal" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header bg-primary text-white">
+                            <h5 class="modal-title">
+                                <i class="fas fa-edit me-2"></i>Edit Itinerary
+                            </h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="editForm">
+                                <input type="hidden" id="editId">
+                                <div class="mb-3">
+                                    <label class="form-label">Destination</label>
+                                    <input type="text" class="form-control" id="editDestination" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Date</label>
+                                    <input type="date" class="form-control" id="editDate" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Activities</label>
+                                    <textarea class="form-control" id="editActivities" rows="3" required></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Notes</label>
+                                    <textarea class="form-control" id="editNotes" rows="2"></textarea>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" id="saveChangesBtn">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Itinerary List with enhanced styling -->
+            <div class="row mt-4">
+                <div class="col-12">
+                    <h3 class="text-primary mb-3">
+                        <i class="fas fa-suitcase me-2"></i>My Itineraries
+                    </h3>
+                    <div id="itineraryList" class="row g-4"></div>
+                    <!-- Loading Spinner -->
+                    <div id="loadingSpinner" class="text-center d-none">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                    <!-- Empty State -->
+                    <div id="emptyState" class="text-center py-5 d-none">
+                        <i class="fas fa-plane-departure fa-3x text-muted mb-3"></i>
+                        <p class="text-muted">No itineraries yet. Start planning your next adventure!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast Notifications -->
+        <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+            <div id="successToast" class="toast" role="alert">
+                <div class="toast-header bg-success text-white">
+                    <i class="fas fa-check-circle me-2"></i>
+                    <strong class="me-auto">Success</strong>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"></button>
+                </div>
+                <div class="toast-body"></div>
+            </div>
+        </div>
+
+        <!-- Add this after your existing modals -->
+        <div class="modal fade" id="readFileModal" tabindex="-1" aria-labelledby="readFileModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="readFileModalLabel">Itinerary File Content</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <pre id="fileContent" class="bg-light p-3" style="white-space: pre-wrap;"></pre>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/itinerary.js"></script>
+    <script>
+        document.getElementById('minimizeBtn').addEventListener('click', () => {
+            window.electronAPI.minimizeWindow();
+        });
+        document.getElementById('maximizeBtn').addEventListener('click', () => {
+            window.electronAPI.maximizeWindow();
+        });
+        document.getElementById('closeBtn').addEventListener('click', () => {
+            window.electronAPI.closeWindow();
+        });
+    </script>
+</body>
+</html> 
